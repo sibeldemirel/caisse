@@ -1,4 +1,9 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using caisse.Data;
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<caisseContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("caisseContext") ?? throw new InvalidOperationException("Connection string 'caisseContext' not found.")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -22,6 +27,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=ProduitModels}/{action=Index}/{id?}");
 
 app.Run();
